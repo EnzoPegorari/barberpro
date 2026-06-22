@@ -6,7 +6,8 @@ function mostrarTela(idTela) {
 function configurarNavegacaoInterna(containerSeletor) {
   const container = document.querySelector(containerSeletor);
   const itens = container.querySelectorAll('.nav-item');
-  const secoes = container.parentElement.querySelectorAll('.secao');
+  const tela = container.closest('.tela');
+  const secoes = tela.querySelectorAll('.secao');
 
   itens.forEach((item) => {
     item.addEventListener('click', () => {
