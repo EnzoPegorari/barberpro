@@ -1,0 +1,7 @@
+**/node_modules
+**/data
+*.log
+.git
+.github
+.DS_Store
+backend/coverage
