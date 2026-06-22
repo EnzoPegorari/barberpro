@@ -1,0 +1,19 @@
+services:
+  barberpro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: barberpro_app
+    ports:
+      - "3000:3000"
+    volumes:
+      - barberpro_data:/app/data
+    environment:
+      - PORT=3000
+      - DB_PATH=/app/data/barberpro.db
+      - JWT_SECRET=troque_este_segredo_em_producao
+      - NODE_ENV=production
+    restart: unless-stopped
+
+volumes:
+  barberpro_data:

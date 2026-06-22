@@ -1,0 +1,58 @@
+name: CI - BarberPro
+
+on:
+  push:
+    branches: [main, develop, 'feature/**']
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  testes:
+    name: Testes automatizados (backend)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Instalar dependências
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Executar testes unitários e de integração
+        working-directory: ./backend
+        run: npm test
+
+  build-docker:
+    name: Build da imagem Docker
+    runs-on: ubuntu-latest
+    needs: testes
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Build da imagem
+        run: docker build -t barberpro:ci .
+
+      - name: Smoke test do container
+        run: |
+          docker run -d --name barberpro_ci -p 3000:3000 -e JWT_SECRET=ci_secret barberpro:ci
+          for i in $(seq 1 10); do
+            if curl -sf http://localhost:3000/api/health; then
+              echo "Healthcheck OK"
+              exit 0
+            fi
+            echo "Aguardando aplicação subir... ($i)"
+            sleep 2
+          done
+          echo "Healthcheck falhou"
+          docker logs barberpro_ci
+          exit 1
