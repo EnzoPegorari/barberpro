@@ -1,0 +1,307 @@
+:root {
+  --grafite: #1c1b19;
+  --grafite-claro: #262420;
+  --dourado: #c9a24b;
+  --dourado-claro: #e0c275;
+  --osso: #f2eee6;
+  --osso-suave: #c9c4b8;
+  --petroleo: #16312e;
+  --erro: #b3493d;
+  --sucesso: #5c8a5a;
+  --raio: 10px;
+  --fonte-display: 'Roboto Slab', Georgia, 'Times New Roman', serif;
+  --fonte-corpo: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: local('Roboto Slab');
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--grafite);
+  color: var(--osso);
+  font-family: var(--fonte-corpo);
+}
+
+button { font-family: inherit; cursor: pointer; }
+input, select { font-family: inherit; }
+
+.tela { display: none; min-height: 100vh; }
+.tela.ativo { display: block; }
+
+/* ===================== AUTENTICAÇÃO ===================== */
+.tela-auth {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(201, 162, 75, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(22, 49, 46, 0.4), transparent 50%),
+    var(--grafite);
+}
+.tela-auth.ativo { display: flex; }
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--grafite-claro);
+  border: 1px solid rgba(201, 162, 75, 0.2);
+  border-radius: var(--raio);
+  padding: 36px 32px;
+}
+
+.auth-marca { text-align: center; margin-bottom: 28px; }
+.auth-logo { width: 40px; height: 40px; color: var(--dourado); margin-bottom: 8px; }
+.auth-marca h1 {
+  font-family: var(--fonte-display);
+  font-size: 28px;
+  font-weight: 700;
+  margin: 4px 0;
+  letter-spacing: 0.5px;
+}
+.auth-marca h1 span { color: var(--dourado); }
+.auth-tag { color: var(--osso-suave); font-size: 13px; margin: 0; }
+
+.auth-tabs {
+  display: flex;
+  background: var(--grafite);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--osso-suave);
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+.auth-tab.ativo { background: var(--dourado); color: var(--grafite); }
+
+.auth-form { display: none; flex-direction: column; gap: 16px; }
+.auth-form.ativo { display: flex; }
+
+.campo { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--osso-suave); }
+.campo input, .campo select {
+  background: var(--grafite);
+  border: 1px solid rgba(242, 238, 230, 0.15);
+  border-radius: 8px;
+  padding: 11px 12px;
+  color: var(--osso);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.campo input:focus, .campo select:focus { border-color: var(--dourado); }
+.campo.oculto { display: none; }
+
+.botao {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.1s, opacity 0.15s;
+}
+.botao:active { transform: scale(0.98); }
+.botao-primario { background: var(--dourado); color: var(--grafite); }
+.botao-primario:hover { background: var(--dourado-claro); }
+.botao-primario:disabled { opacity: 0.5; cursor: not-allowed; }
+.botao-sair {
+  background: none;
+  border: 1px solid rgba(242, 238, 230, 0.2);
+  color: var(--osso-suave);
+  font-size: 12px;
+  padding: 8px 12px;
+  width: 100%;
+}
+.botao-sair:hover { border-color: var(--erro); color: var(--erro); }
+
+.auth-erro { color: var(--erro); font-size: 13px; margin: 0; min-height: 0; }
+
+/* ===================== APP (LAYOUT GERAL) ===================== */
+.tela-app { display: none; }
+.tela-app.ativo { display: flex; min-height: 100vh; }
+
+.nav-lateral {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--grafite-claro);
+  border-right: 1px solid rgba(201, 162, 75, 0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+}
+
+.nav-marca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 0 8px;
+}
+.nav-marca svg { width: 24px; height: 24px; color: var(--dourado); }
+.nav-marca span { font-family: var(--fonte-display); font-weight: 700; font-size: 18px; }
+
+.nav-itens { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.nav-item {
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--osso-suave);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.nav-item:hover { background: rgba(242, 238, 230, 0.05); color: var(--osso); }
+.nav-item.ativo { background: rgba(201, 162, 75, 0.15); color: var(--dourado); font-weight: 600; }
+
+.nav-rodape { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid rgba(242, 238, 230, 0.1); }
+.nav-usuario { font-size: 13px; color: var(--osso-suave); margin: 0; padding: 0 4px; }
+
+.conteudo { flex: 1; padding: 40px 48px; overflow-y: auto; max-width: 900px; }
+
+.secao { display: none; }
+.secao.ativo { display: block; }
+
+.secao-header { margin-bottom: 28px; }
+.secao-header h2 { font-family: var(--fonte-display); font-size: 26px; margin: 0 0 6px; }
+.secao-header p { color: var(--osso-suave); margin: 0; font-size: 14px; }
+
+.grade-formulario {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.campo-data-agenda { max-width: 240px; margin-bottom: 24px; }
+
+/* ===================== RELÓGIO (assinatura visual) ===================== */
+.relogio-painel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--grafite-claro);
+  border: 1px solid rgba(201, 162, 75, 0.15);
+  border-radius: var(--raio);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.relogio { width: 64px; height: 64px; flex-shrink: 0; }
+.relogio-mostrador { fill: var(--grafite); stroke: var(--dourado); stroke-width: 2; }
+.relogio-ponteiro { stroke: var(--dourado); stroke-width: 3; stroke-linecap: round; transition: transform 0.3s ease; transform-origin: 60px 60px; }
+.relogio-centro { fill: var(--dourado); }
+.relogio-legenda { margin: 0; color: var(--osso-suave); font-size: 14px; }
+
+/* ===================== GRADE DE HORÁRIOS ===================== */
+.horarios-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+}
+.horario-slot {
+  background: var(--grafite-claro);
+  border: 1px solid rgba(242, 238, 230, 0.12);
+  border-radius: 8px;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--osso);
+  transition: border-color 0.15s, background 0.15s;
+}
+.horario-slot:hover { border-color: var(--dourado); }
+.horario-slot.selecionado { background: var(--dourado); color: var(--grafite); border-color: var(--dourado); }
+.horario-slot.ocupado { background: none; color: var(--osso-suave); opacity: 0.35; cursor: not-allowed; }
+
+.mensagem { font-size: 13px; margin-top: 16px; min-height: 0; }
+.mensagem.sucesso { color: var(--sucesso); }
+.mensagem.erro { color: var(--erro); }
+
+/* ===================== LISTA DE AGENDAMENTOS ===================== */
+.lista-agendamentos { display: flex; flex-direction: column; gap: 12px; }
+.agendamento-card {
+  background: var(--grafite-claro);
+  border: 1px solid rgba(242, 238, 230, 0.1);
+  border-left: 3px solid var(--dourado);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.agendamento-card.cancelado { border-left-color: var(--erro); opacity: 0.6; }
+.agendamento-info h3 { margin: 0 0 4px; font-size: 15px; }
+.agendamento-info p { margin: 0; font-size: 13px; color: var(--osso-suave); }
+.agendamento-status {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(92, 138, 90, 0.15);
+  color: var(--sucesso);
+}
+.agendamento-status.cancelado { background: rgba(179, 73, 61, 0.15); color: var(--erro); }
+.botao-cancelar {
+  background: none;
+  border: 1px solid var(--erro);
+  color: var(--erro);
+  font-size: 12px;
+  padding: 8px 14px;
+}
+.botao-cancelar:hover { background: var(--erro); color: var(--osso); }
+.lista-vazia { color: var(--osso-suave); font-size: 14px; padding: 24px; text-align: center; }
+
+/* ===================== TOAST ===================== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--grafite-claro);
+  border: 1px solid var(--dourado);
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  max-width: 320px;
+}
+.toast.visivel { opacity: 1; transform: translateY(0); }
+.toast.erro { border-color: var(--erro); }
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width: 720px) {
+  .tela-app.ativo { flex-direction: column; }
+  .nav-lateral { width: 100%; flex-direction: row; align-items: center; padding: 12px 16px; }
+  .nav-itens { flex-direction: row; flex: 1; }
+  .nav-rodape { flex-direction: row; align-items: center; border: none; padding: 0; }
+  .nav-usuario { display: none; }
+  .conteudo { padding: 24px 20px; }
+  .grade-formulario { grid-template-columns: 1fr; }
+  .relogio-painel { flex-direction: column; text-align: center; }
+}
+
+:focus-visible { outline: 2px solid var(--dourado); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

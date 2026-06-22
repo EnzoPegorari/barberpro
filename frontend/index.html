@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarberPro — Gestão de Barbearias</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===================== TELA DE AUTENTICAÇÃO ===================== -->
+  <section id="tela-auth" class="tela tela-auth ativo">
+    <div class="auth-card">
+      <div class="auth-marca">
+        <svg class="auth-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 8 L38 36 M38 8 L10 36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="10" cy="8" r="4" fill="currentColor"/>
+          <circle cx="38" cy="36" r="4" fill="currentColor"/>
+        </svg>
+        <h1>Barber<span>Pro</span></h1>
+        <p class="auth-tag">Agenda sem conflitos. Barbearia sem bagunça.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab ativo" data-tab="login">Entrar</button>
+        <button class="auth-tab" data-tab="cadastro">Criar conta</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="form-login" class="auth-form ativo" data-form="login">
+        <label class="campo">
+          <span>Tipo de conta</span>
+          <select id="login-tipo" required>
+            <option value="cliente">Cliente</option>
+            <option value="barbeiro">Barbeiro</option>
+          </select>
+        </label>
+        <label class="campo">
+          <span>E-mail</span>
+          <input type="email" id="login-email" required placeholder="voce@email.com" />
+        </label>
+        <label class="campo">
+          <span>Senha</span>
+          <input type="password" id="login-senha" required placeholder="••••••••" />
+        </label>
+        <p class="auth-erro" id="login-erro"></p>
+        <button type="submit" class="botao botao-primario">Entrar</button>
+      </form>
+
+      <!-- CADASTRO -->
+      <form id="form-cadastro" class="auth-form" data-form="cadastro">
+        <label class="campo">
+          <span>Tipo de conta</span>
+          <select id="cadastro-tipo" required>
+            <option value="cliente">Cliente</option>
+            <option value="barbeiro">Barbeiro</option>
+          </select>
+        </label>
+        <label class="campo">
+          <span>Nome completo</span>
+          <input type="text" id="cadastro-nome" required placeholder="Seu nome" />
+        </label>
+        <label class="campo">
+          <span>Telefone</span>
+          <input type="tel" id="cadastro-telefone" required placeholder="(16) 99999-0000" />
+        </label>
+        <label class="campo campo-especialidade oculto">
+          <span>Especialidade</span>
+          <input type="text" id="cadastro-especialidade" placeholder="Ex: Corte e barba" />
+        </label>
+        <label class="campo">
+          <span>E-mail</span>
+          <input type="email" id="cadastro-email" required placeholder="voce@email.com" />
+        </label>
+        <label class="campo">
+          <span>Senha</span>
+          <input type="password" id="cadastro-senha" required minlength="6" placeholder="mínimo 6 caracteres" />
+        </label>
+        <p class="auth-erro" id="cadastro-erro"></p>
+        <button type="submit" class="botao botao-primario">Criar conta</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== APP (CLIENTE) ===================== -->
+  <section id="tela-cliente" class="tela tela-app">
+    <aside class="nav-lateral">
+      <div class="nav-marca">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 8 L38 36 M38 8 L10 36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="10" cy="8" r="4" fill="currentColor"/>
+          <circle cx="38" cy="36" r="4" fill="currentColor"/>
+        </svg>
+        <span>BarberPro</span>
+      </div>
+      <nav class="nav-itens">
+        <button class="nav-item ativo" data-secao="agendar">Agendar</button>
+        <button class="nav-item" data-secao="meus-agendamentos">Meus horários</button>
+      </nav>
+      <div class="nav-rodape">
+        <p class="nav-usuario" id="cliente-nome-exibicao"></p>
+        <button class="botao botao-sair" id="btn-logout-cliente">Sair</button>
+      </div>
+    </aside>
+
+    <main class="conteudo">
+      <!-- SEÇÃO: AGENDAR -->
+      <section class="secao ativo" data-secao="agendar">
+        <header class="secao-header">
+          <h2>Novo agendamento</h2>
+          <p>Escolha o barbeiro, o serviço e um horário disponível.</p>
+        </header>
+
+        <div class="grade-formulario">
+          <label class="campo">
+            <span>Barbeiro</span>
+            <select id="agendar-barbeiro"></select>
+          </label>
+          <label class="campo">
+            <span>Serviço</span>
+            <select id="agendar-servico"></select>
+          </label>
+          <label class="campo">
+            <span>Data</span>
+            <input type="date" id="agendar-data" />
+          </label>
+        </div>
+
+        <div class="relogio-painel">
+          <svg id="relogio-svg" viewBox="0 0 120 120" class="relogio">
+            <circle cx="60" cy="60" r="56" class="relogio-mostrador"/>
+            <line id="relogio-ponteiro" x1="60" y1="60" x2="60" y2="20" class="relogio-ponteiro"/>
+            <circle cx="60" cy="60" r="4" class="relogio-centro"/>
+          </svg>
+          <p class="relogio-legenda" id="relogio-legenda">Selecione barbeiro e data para ver horários</p>
+        </div>
+
+        <div id="horarios-grade" class="horarios-grade"></div>
+
+        <p class="mensagem" id="agendar-mensagem"></p>
+      </section>
+
+      <!-- SEÇÃO: MEUS AGENDAMENTOS -->
+      <section class="secao" data-secao="meus-agendamentos">
+        <header class="secao-header">
+          <h2>Meus horários</h2>
+          <p>Acompanhe e cancele seus agendamentos.</p>
+        </header>
+        <div id="lista-meus-agendamentos" class="lista-agendamentos"></div>
+      </section>
+    </main>
+  </section>
+
+  <!-- ===================== APP (BARBEIRO) ===================== -->
+  <section id="tela-barbeiro" class="tela tela-app">
+    <aside class="nav-lateral">
+      <div class="nav-marca">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 8 L38 36 M38 8 L10 36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="10" cy="8" r="4" fill="currentColor"/>
+          <circle cx="38" cy="36" r="4" fill="currentColor"/>
+        </svg>
+        <span>BarberPro</span>
+      </div>
+      <nav class="nav-itens">
+        <button class="nav-item ativo" data-secao="agenda">Minha agenda</button>
+      </nav>
+      <div class="nav-rodape">
+        <p class="nav-usuario" id="barbeiro-nome-exibicao"></p>
+        <button class="botao botao-sair" id="btn-logout-barbeiro">Sair</button>
+      </div>
+    </aside>
+
+    <main class="conteudo">
+      <section class="secao ativo" data-secao="agenda">
+        <header class="secao-header">
+          <h2>Minha agenda</h2>
+          <p>Visualize os atendimentos marcados para o dia.</p>
+        </header>
+        <label class="campo campo-data-agenda">
+          <span>Data</span>
+          <input type="date" id="agenda-data" />
+        </label>
+        <div id="lista-agenda" class="lista-agendamentos"></div>
+      </section>
+    </main>
+  </section>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cliente.js"></script>
+  <script src="js/barbeiro.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
